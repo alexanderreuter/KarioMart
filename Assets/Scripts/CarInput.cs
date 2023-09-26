@@ -13,9 +13,9 @@ public class CarInput : MonoBehaviour
         carController = GetComponent<CarController>();
     }
     
+    // Read input using Unity's input system
     public void PlayerInput(InputAction.CallbackContext context)
     {
-        Debug.Log("PlayerInput called");
         carController.SetInputVector(context.ReadValue<Vector2>());
     }
 }
