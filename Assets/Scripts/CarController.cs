@@ -6,39 +6,43 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
-    [SerializeField] private float acceleration = 20.0f;
+    [SerializeField] private float accelerationSpeed = 20.0f;
     [SerializeField] private float turnSpeed = 3.5f;
     [SerializeField] private float maxSpeed = 15.0f;
-    [SerializeField] private float sideDrift = 0.95f;
+    [SerializeField] private float driftFactor = 0.95f;
+    //[SerializeField] private float boostSpeed = 30.0f;
     private float accelerationInput;
     private float turnInput;
-    private float rotationAngle;
+    private float rotationAngle = 90;
     private float velocityVsUp;
     private float minSpeedBeforeTurn;
-    Rigidbody2D rb;
+    private float lateralVelocity;
+    private Rigidbody2D rb;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        //rb.transform.Rotate(0, 0, 90);
-    }
-
     // Update is called once per frame
     private void FixedUpdate()
     {
         AccelerationForce();
-        KillOrthogonalVelocity();
+        ReduceOrthogonalVelocity();
         TurnForce();
     }
 
+    // Read input using Unity's input system
+    private void PlayerInput(InputAction.CallbackContext context)
+    {
+        Vector2 inputVector = context.ReadValue<Vector2>();
+        accelerationInput = inputVector.y;
+        turnInput = inputVector.x;
+    }
+    
     private void AccelerationForce()
     {
-        // Forward force in relation to velocity
+        // Forward force in relation to velocity direction
         velocityVsUp = Vector2.Dot(rb.velocity, transform.up);
         
         // Add so the car can't go faster than the max speed in the forward direction 
@@ -49,7 +53,7 @@ public class CarController : MonoBehaviour
         if (velocityVsUp < -maxSpeed * 0.5f && accelerationInput < 0)
             return;
         
-        // Add so we can't go faster in any direction when accelerating
+        // Add so we can't go faster than max speed in any direction when accelerating
         if (rb.velocity.sqrMagnitude > maxSpeed * maxSpeed && accelerationInput > 0)
             return;
         
@@ -60,7 +64,7 @@ public class CarController : MonoBehaviour
             rb.drag = 0.0f;
         
         // Add acceleration
-        Vector2 accelerationForce = transform.up * (accelerationInput * acceleration);
+        Vector2 accelerationForce = transform.up * (accelerationInput * accelerationSpeed);
         rb.AddForce(accelerationForce, ForceMode2D.Force);
     }
     
@@ -75,18 +79,26 @@ public class CarController : MonoBehaviour
         rb.MoveRotation(rotationAngle);
     }
     
-    // Method to read the acceleration and turn input
-    public void SetInputVector(Vector2 inputVector)
-    {
-        accelerationInput = inputVector.y;
-        turnInput = inputVector.x;
-    }
-    
-    // Adjusts the velocity of the car to be in the direction of the car's forward vector.
-    private void KillOrthogonalVelocity()
+    // Reduce the side velocity of the car. This is to prevent the car from drifting too much sideways
+    private void ReduceOrthogonalVelocity()
     {
         Vector2 forwardVelocity = transform.up * Vector2.Dot(rb.velocity, transform.up);
-        Vector2 rightVelocity = transform.right * Vector2.Dot(rb.velocity, transform.right);
-        rb.velocity = forwardVelocity + rightVelocity * sideDrift;
+        Vector2 sideVelocity = transform.right * Vector2.Dot(rb.velocity, transform.right);
+        rb.velocity = forwardVelocity + sideVelocity * driftFactor;
+    }
+
+    public bool IsTireScreeching()
+    {
+        lateralVelocity = Vector2.Dot(rb.velocity, transform.right);
+        
+        // If the car is moving forward and the car is braking, activate skidmarks
+        if (accelerationInput < 0 && velocityVsUp > 0)
+            return true;
+        
+        // 
+        if (Mathf.Abs(lateralVelocity) > 4f && Mathf.Abs(velocityVsUp) > 4f)
+            return true;
+
+        return false;   
     }
 }
