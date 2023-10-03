@@ -6,7 +6,7 @@ using TMPro;
 public class RaceTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
-    private float currentTime;
+    public float CurrentTime { get; private set; }
     
     private void Update()
     {
@@ -15,11 +15,11 @@ public class RaceTimer : MonoBehaviour
     
     private void UpdateTimer()
     {
-        currentTime += 1 * Time.deltaTime;
+        CurrentTime += 1 * Time.deltaTime;
     
-        int hours = Mathf.FloorToInt(currentTime / 3600);
-        int minutes = Mathf.FloorToInt((currentTime % 3600) / 60);
-        int seconds = Mathf.FloorToInt(currentTime % 60);
+        int hours = Mathf.FloorToInt(CurrentTime / 3600);
+        int minutes = Mathf.FloorToInt((CurrentTime % 3600) / 60);
+        int seconds = Mathf.FloorToInt(CurrentTime % 60);
         
         timerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
