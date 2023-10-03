@@ -642,6 +642,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 10213024262069301, guid: 784a0b35ce7542144ba8aa4a025b5335, type: 3}
   m_PrefabInstance: {fileID: 5253369220196731482}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2082055875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3081179735093014065, guid: 55a7e90a0ca48e34d9039566971a466b, type: 3}
+  m_PrefabInstance: {fileID: 4588233982038090242}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &392569613354990886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3364,6 +3375,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8545248084612308426, guid: 55a7e90a0ca48e34d9039566971a466b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545248084612308426, guid: 55a7e90a0ca48e34d9039566971a466b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3417,6 +3436,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1289173322286643509, guid: 784a0b35ce7542144ba8aa4a025b5335, type: 3}
+      propertyPath: boostSlider
+      value: 
+      objectReference: {fileID: 2082055875}
     - target: {fileID: 5849201498558718425, guid: 784a0b35ce7542144ba8aa4a025b5335, type: 3}
       propertyPath: maxSpeed
       value: 10

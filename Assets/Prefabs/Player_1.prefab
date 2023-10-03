@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5849201498558718425}
   - component: {fileID: 7941608585395321120}
   - component: {fileID: 2376186401646910878}
+  - component: {fileID: 1289173322286643509}
   m_Layer: 0
   m_Name: Player_1
   m_TagString: Player
@@ -133,6 +134,9 @@ MonoBehaviour:
   turnSpeed: 3.5
   maxSpeed: 15
   driftFactor: 0.95
+  carStartRotation: 0
+  boostSpeed: 30
+  boostCooldown: {fileID: 0}
 --- !u!114 &7941608585395321120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +232,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 1.31}
   m_EdgeRadius: 0
+--- !u!114 &1289173322286643509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887378039881166095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af7973cefc416a489b6281154b69521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostSlider: {fileID: 0}
 --- !u!1001 &3699479293188173654
 PrefabInstance:
   m_ObjectHideFlags: 0

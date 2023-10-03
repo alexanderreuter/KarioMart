@@ -23,10 +23,12 @@ public class CarController : MonoBehaviour
     private float boostingTime;
     private Rigidbody2D rb;
     RaceTimer raceTimer;
+    public BoostCooldown boostCooldown;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        boostCooldown = GetComponent<BoostCooldown>();
     }
     
     private void Start()
@@ -52,12 +54,16 @@ public class CarController : MonoBehaviour
     
     public void Boost(InputAction.CallbackContext context)
     {
-        Debug.Log("Started");
-        isBoosting = true;
-        StartCoroutine(StartBoosting());
+        if (!boostCooldown.IsBoostOnCooldown())
+        {
+            Debug.Log("Started");
+            isBoosting = true;
+            boostCooldown.StartBoostCooldown();
+            StartCoroutine(StartBoost());
+        }
     }
     
-    IEnumerator StartBoosting()
+    IEnumerator StartBoost()
     {
         yield return new WaitForSeconds(0.5f); 
         Debug.Log("Boosting over");
