@@ -22,8 +22,8 @@ public class CarController : MonoBehaviour
     private bool isBoosting = false;
     private float boostingTime;
     private Rigidbody2D rb;
-    RaceTimer raceTimer;
-    public BoostCooldown boostCooldown;
+    private RaceTimer raceTimer;
+    private BoostCooldown boostCooldown;
     
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class CarController : MonoBehaviour
         turnInput = inputVector.x;
     }
     
-    public void Boost(InputAction.CallbackContext context)
+    public void Boost()
     {
         if (!boostCooldown.IsBoostOnCooldown())
         {
@@ -68,6 +68,12 @@ public class CarController : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
         Debug.Log("Boosting over");
         isBoosting = false;
+    }
+    
+    // Getter for isBoostOnCooldown
+    public bool IsBoosting()
+    {
+        return isBoosting;
     }
     
     private void AccelerationForce()
