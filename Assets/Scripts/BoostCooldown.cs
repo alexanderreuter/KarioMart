@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class BoostCooldown : MonoBehaviour
 {
-    private bool isBoostOnCooldown;
     private float boostCooldownTime = 5f; 
+    private bool isBoostOnCooldown;
     public Slider boostSlider;
-    
     
     // Start is called before the first frame update
     void Start()
@@ -21,11 +20,10 @@ public class BoostCooldown : MonoBehaviour
         }
         
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        if (isBoostOnCooldown)
+        if (isBoostOnCooldown && RaceManager.Instance.IsRaceLive)
         {
             boostCooldownTime -= Time.deltaTime;
             if (boostCooldownTime <= 0f)

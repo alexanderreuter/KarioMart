@@ -825,6 +825,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467976954651407879}
+  - component: {fileID: 3400202705418315662}
   m_Layer: 5
   m_Name: IngameUI
   m_TagString: Untagged
@@ -844,10 +845,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1824782712687945686}
   - {fileID: 4427263500966390579}
   - {fileID: 3024617745944114702}
   - {fileID: 5144163683978044206}
+  - {fileID: 1824782712687945686}
   m_Father: {fileID: 6011868161521421280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -855,6 +856,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3400202705418315662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3517990308172769657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90cc77b17b0879744b3fa1533c9df35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lapsText: {fileID: 7132980689762454779}
 --- !u!1 &3962830826425274044
 GameObject:
   m_ObjectHideFlags: 0

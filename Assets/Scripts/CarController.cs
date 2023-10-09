@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class CarController : MonoBehaviour
 {
     [SerializeField] private float accelerationSpeed = 15.0f;
     [SerializeField] private float turnSpeed = 3.8f;
     [SerializeField] private float maxSpeed = 10.0f;
-    [SerializeField] private float driftFactor = 0.95f;
-    [SerializeField] private float carStartRotation; 
+    [SerializeField] private float driftFactor = 0.95f; 
     [SerializeField] private float boostSpeed = 30.0f;
     private float accelerationInput;
     private float turnInput;
@@ -21,7 +21,6 @@ public class CarController : MonoBehaviour
     private float lateralVelocity;
     private bool isBoosting = false;
     private Rigidbody2D rb;
-    private RaceTimer raceTimer;
     private BoostCooldown boostCooldown;
     
     // Getter for isBoostOnCooldown
@@ -38,21 +37,24 @@ public class CarController : MonoBehaviour
     
     private void Start()
     {
-        rotationAngle = carStartRotation;
+        rotationAngle = transform.rotation.eulerAngles.z;
     }
     
     // Update is called once per frame
     private void FixedUpdate()
     {
-        AccelerationForce();
-        ReduceOrthogonalVelocity();
-        TurnForce();
+        if (RaceManager.Instance.IsRaceLive)
+        {
+            AccelerationForce();
+            ReduceOrthogonalVelocity();
+            TurnForce();
+        }
     }
     
     // Read input using Unity's input system
-    private void PlayerInput(InputAction.CallbackContext context)
+    public void PlayerInput(InputAction.CallbackContext context)
     {
-        Vector2 inputVector = context.ReadValue<Vector2>();
+        Vector2 inputVector = context.ReadValue<Vector2>(); 
         accelerationInput = inputVector.y;
         turnInput = inputVector.x;
     }
@@ -61,7 +63,7 @@ public class CarController : MonoBehaviour
     {
         if (!boostCooldown.IsBoostOnCooldown())
         {
-            Debug.Log("Started");
+            Debug.Log("Boosting started");
             isBoosting = true;
             boostCooldown.StartBoostCooldown();
             StartCoroutine(StartBoost());

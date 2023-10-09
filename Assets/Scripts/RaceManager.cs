@@ -1,19 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-
+using UnityEngine.InputSystem;
 
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance;
+    public List<CheckPointManager> checkPointManagers = new List<CheckPointManager>();
     
-    [SerializeField] private GameObject checkpoints;
-    [SerializeField] private TextMeshProUGUI lapsText;
-    [SerializeField] private int totalLaps = 3;
-    private int currentCheckpoint = -1;
-    private int currentLap = 1;
+    private bool isRaceStarting;
+    private bool isRaceLive;
+    private bool isRaceCompleted;
     private int numberOfCheckpoints;
     
     private void Awake()
@@ -28,33 +25,47 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void RegisterCheckPointManager(CheckPointManager manager)
     {
-        lapsText.text = Convert.ToString("Lap " + currentLap + "/" + totalLaps);
-        numberOfCheckpoints = checkpoints.transform.childCount;
+        checkPointManagers.Add(manager);
+    }
+    
+    public bool IsRaceLive
+    {
+        get { return isRaceLive; }
+        set { isRaceLive = value; }
     }
 
-    public void OnCheckPointPassed(int checkpointIndex)
+    public bool IsRaceStarting
     {
-        if (checkpointIndex == currentCheckpoint + 1)
+        get { return isRaceStarting; }
+        set { isRaceStarting = value; }
+    }
+    
+    public bool IsRaceCompleted
+    {
+        get { return isRaceCompleted; }
+        set { isRaceCompleted = value; }
+    }
+    
+    public int NumberOfCheckpoints
+    {
+        get { return numberOfCheckpoints; }
+    }
+    
+    void Start()
+    {
+        isRaceLive = false;
+        isRaceStarting = false;
+        isRaceCompleted = false;
+    }
+    
+    private void Update()
+    {
+        if (Keyboard.current.enterKey.wasPressedThisFrame && !isRaceLive && !isRaceStarting)
         {
-            currentCheckpoint = checkpointIndex;
-            Debug.Log("Checkpoint " + checkpointIndex + " passed!");
+            Debug.Log("Enter key pressed, starting race");
+            isRaceStarting = true;
         }
-        
-        if (currentCheckpoint == numberOfCheckpoints - 1)
-        {
-            currentCheckpoint = -1;
-            Debug.Log("Lap " + currentLap + " completed!");
-            currentLap++;
-            
-            if (currentLap <= totalLaps)
-                lapsText.text = Convert.ToString("Lap " + currentLap + "/" + totalLaps);
-        }
-
-        if (currentLap > totalLaps)
-        {
-            Debug.Log("Race completed!");
-        }
-    }    
+    }
 }
