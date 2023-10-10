@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -12,12 +9,12 @@ public class WinnerScreenUI : MonoBehaviour
     
     private void OnEnable()
     {
-        CheckPointManager.OnRaceCompleted += HandleRaceCompleted;
+        CheckpointManager.OnRaceCompleted += HandleRaceCompleted;
     }
 
     private void OnDisable()
     {
-        CheckPointManager.OnRaceCompleted -= HandleRaceCompleted;
+        CheckpointManager.OnRaceCompleted -= HandleRaceCompleted;
     }
 
     private void Start()

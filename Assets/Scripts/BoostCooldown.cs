@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,12 @@ public class BoostCooldown : MonoBehaviour
     private bool isBoostOnCooldown;
     public Slider boostSlider;
     
-    // Start is called before the first frame update
+    // Getter for isBoostOnCooldown
+    public bool IsBoostOnCooldown()
+    {
+        return isBoostOnCooldown;
+    }
+    
     void Start()
     {
         isBoostOnCooldown = true;
@@ -31,15 +34,8 @@ public class BoostCooldown : MonoBehaviour
                 isBoostOnCooldown = false;
                 boostCooldownTime = 0f;
             }
-
             UpdateBoostSlider();
         }
-    }
-    
-    // Getter for isBoostOnCooldown
-    public bool IsBoostOnCooldown()
-    {
-        return isBoostOnCooldown;
     }
 
     public void StartBoostCooldown()
@@ -54,8 +50,11 @@ public class BoostCooldown : MonoBehaviour
     {
         if (boostSlider != null)
         {
-            float fillValue = Mathf.Clamp01(boostCooldownTime / 5f); // Normalize the value
-            boostSlider.value = 1 - fillValue; // Invert the value to match the fill direction
+            // Normalize the value
+            float fillValue = Mathf.Clamp01(boostCooldownTime / 5f);
+            
+            // Invert the value to match the fill direction
+            boostSlider.value = 1 - fillValue; 
         }
     }
 }

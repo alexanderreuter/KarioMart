@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using TMPro;
@@ -10,12 +8,12 @@ public class IngameUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        CheckPointManager.OnLapCompleted += UpdateLapsText; 
+        CheckpointManager.OnLapCompleted += UpdateLapsText; 
     }
 
     private void OnDisable()
     {
-        CheckPointManager.OnLapCompleted -= UpdateLapsText; 
+        CheckpointManager.OnLapCompleted -= UpdateLapsText; 
     }
 
     private void UpdateLapsText(int currentLap, int totalLaps)

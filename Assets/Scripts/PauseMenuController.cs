@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseMenuController : MonoBehaviour
 {
     public GameObject pauseMenu;
+    private bool isPaused;
 
     void Update()
     {
@@ -17,7 +16,7 @@ public class PauseMenuController : MonoBehaviour
 
     void TogglePauseMenu()
     {
-        bool isPaused = !pauseMenu.activeSelf;
+        isPaused = !pauseMenu.activeSelf;
         pauseMenu.SetActive(isPaused);
         Time.timeScale = isPaused ? 0 : 1;
     }

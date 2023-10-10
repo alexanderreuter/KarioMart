@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
@@ -11,8 +9,8 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player"))
         { 
             int playerID = other.GetComponent<PlayerController>().PlayerID;
-            CheckPointManager checkPointManager = RaceManager.Instance.checkPointManagers[playerID];
-            checkPointManager.OnCheckPointPassed(checkpointIndex);
+            CheckpointManager checkpointManager = RaceManager.Instance.checkpointManagers[playerID];
+            checkpointManager.OnCheckPointPassed(checkpointIndex);
         }
     }
 }

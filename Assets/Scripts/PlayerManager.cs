@@ -1,19 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] List<GameObject> players = new List<GameObject>();
     private int playerIndex;
     private int sceneIndex;
-    [SerializeField] List<GameObject> players = new List<GameObject>();
     PlayerInputManager playerInputManager;
     
-    
-    // Start is called before the first frame update
     void Start()
     {
         playerInputManager = GetComponent<PlayerInputManager>();
@@ -23,7 +19,9 @@ public class PlayerManager : MonoBehaviour
     
     public void SpawnPlayer()
     {
+        // Change the player input manager prefab to match the current player index
         playerInputManager.playerPrefab = players[playerIndex];
+        
         SetPlayerSpawnPosition(sceneIndex, playerIndex);
         if (players.Count - 1 > playerIndex)
             playerIndex++;
@@ -42,6 +40,7 @@ public class PlayerManager : MonoBehaviour
                 playerInputManager.playerPrefab.transform.position = new Vector3(0.5f,6.5f, 0);
             }
             
+            // Set start car rotation
             playerInputManager.playerPrefab.transform.eulerAngles = new Vector3(0,0,90);
         }
 
@@ -56,6 +55,7 @@ public class PlayerManager : MonoBehaviour
                 playerInputManager.playerPrefab.transform.position = new Vector3(-12f, 3.7f, 0);
             }
             
+            // Set start car rotation
             playerInputManager.playerPrefab.transform.eulerAngles = new Vector3(0, 0, 270);
         }
         
@@ -69,7 +69,8 @@ public class PlayerManager : MonoBehaviour
             {
                 playerInputManager.playerPrefab.transform.position = new Vector3(-3f, 7.5f, 0);
             }
-                
+            
+            // Set start car rotation
             playerInputManager.playerPrefab.transform.eulerAngles = new Vector3(0, 0, 270);
         }
     }

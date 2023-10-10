@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class CarController : MonoBehaviour
 {
@@ -16,14 +12,13 @@ public class CarController : MonoBehaviour
     private float accelerationInput;
     private float turnInput;
     private float rotationAngle;
-    private float velocityVsUp;
+    private float dotOfVelocityAndUp;
     private float minSpeedBeforeTurn;
     private float lateralVelocity;
-    private bool isBoosting = false;
+    private bool isBoosting;
     private Rigidbody2D rb;
     private BoostCooldown boostCooldown;
     
-    // Getter for isBoostOnCooldown
     public bool IsBoosting()
     {
         return isBoosting;
@@ -37,10 +32,10 @@ public class CarController : MonoBehaviour
     
     private void Start()
     {
+        isBoosting = false;
         rotationAngle = transform.rotation.eulerAngles.z;
     }
     
-    // Update is called once per frame
     private void FixedUpdate()
     {
         if (RaceManager.Instance.IsRaceLive)
@@ -51,7 +46,6 @@ public class CarController : MonoBehaviour
         }
     }
     
-    // Read input using Unity's input system
     public void PlayerInput(InputAction.CallbackContext context)
     {
         Vector2 inputVector = context.ReadValue<Vector2>(); 
@@ -80,7 +74,7 @@ public class CarController : MonoBehaviour
     private void AccelerationForce()
     {
         // Forward force in relation to velocity direction
-        velocityVsUp = Vector2.Dot(rb.velocity, transform.up);
+        dotOfVelocityAndUp = Vector2.Dot(rb.velocity, transform.up);
 
         // Add drag when there is no acceleration input
         if (accelerationInput == 0)
@@ -91,11 +85,11 @@ public class CarController : MonoBehaviour
         if (!isBoosting)
         {
             // Add so the car can't go faster than the max speed in the forward direction 
-            if (velocityVsUp > maxSpeed && accelerationInput > 0)
+            if (dotOfVelocityAndUp > maxSpeed && accelerationInput > 0)
                 return;
             
             // Add so the car can't go faster than the max speed / 2 in the backwards direction 
-            if (velocityVsUp < -maxSpeed * 0.5f && accelerationInput < 0)
+            if (dotOfVelocityAndUp < -maxSpeed * 0.5f && accelerationInput < 0)
                 return;
         
             // Add so we can't go faster than max speed in any direction when accelerating
@@ -138,10 +132,10 @@ public class CarController : MonoBehaviour
         lateralVelocity = Vector2.Dot(rb.velocity, transform.right);
         
         // If the car is moving forward and the car is braking, activate skidmarks
-        if (accelerationInput < 0 && velocityVsUp > 0)
+        if (accelerationInput < 0 && dotOfVelocityAndUp > 0)
             return true;
         
-        // 
+        // If the car is drifting, activate skidmarks
         if (Mathf.Abs(lateralVelocity) > 4f)
             return true;
 

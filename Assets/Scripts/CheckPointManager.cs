@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class CheckPointManager : MonoBehaviour
+public class CheckpointManager : MonoBehaviour
 {
     public static event Action<int, int> OnLapCompleted;
-    public delegate void RaceCompletedEventHandler(int playerID);
+    
+    // Delegate is used since two Action events with different parameter size can't be declared
+    public delegate void RaceCompletedEventHandler(int playerID); 
     public static event RaceCompletedEventHandler OnRaceCompleted;
     
     [SerializeField] private int totalLaps = 3;
-    private int currentCheckpoint = -1;
+    private int currentCheckpoint = -1; // Initialized to -1 since the player start behind the finish line
     private int currentLap = 1;
     private int numberOfCheckpoints;
     private int playerID;
@@ -19,11 +18,13 @@ public class CheckPointManager : MonoBehaviour
     public void Initialize(int playerID)
     {
         this.playerID = playerID;
-        numberOfCheckpoints = RaceManager.Instance.transform.childCount;
     }
     
     private void Start()
     {
+        // Checkpoints are stored as children under the RaceManager in each level 
+        numberOfCheckpoints = RaceManager.Instance.transform.childCount;
+        
         // Initialize UI
         OnLapCompleted?.Invoke(currentLap, totalLaps);
     }
@@ -48,7 +49,7 @@ public class CheckPointManager : MonoBehaviour
 
         if (currentLap > totalLaps)
         {
-            Debug.Log("Player " + (playerID + 1) + "Race completed!");
+            Debug.Log("Player " + (playerID + 1) + ", Race completed!");
             OnRaceCompleted?.Invoke(playerID);
             RaceManager.Instance.IsRaceLive = false;
             RaceManager.Instance.IsRaceCompleted = true;

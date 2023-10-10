@@ -82,30 +82,8 @@
                 },
                 {
                     "name": "",
-                    "id": "91179f77-3e0c-4616-a973-3eb6787bd9a6",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "77dfdfe9-f373-45b6-a32b-5a72d2c298df",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Boost",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a4ec95ca-d2e2-4bf1-88e3-17e1c3ae0e6c",
-                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

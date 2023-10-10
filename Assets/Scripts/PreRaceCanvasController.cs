@@ -1,31 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Serialization;
 
 public class PreRaceUIController : MonoBehaviour
 {
     [SerializeField] private GameObject countdownCanvas;
     [SerializeField] private GameObject preRaceCanvas;
     [SerializeField] private TextMeshProUGUI countdownText;
-    private bool beenRun; // remove?
+    private bool countdownBeenRunned;
     
     void Start()
     {
         preRaceCanvas.SetActive(true);
         countdownCanvas.SetActive(false);
-        beenRun = false;
+        countdownBeenRunned = false;
         Debug.Log("Active canvas");
     }
     
     void Update()
     {
-        if (RaceManager.Instance.IsRaceStarting && !beenRun && !RaceManager.Instance.IsRaceLive)
+        if (RaceManager.Instance.IsRaceStarting && !countdownBeenRunned && !RaceManager.Instance.IsRaceLive)
         {
-            beenRun = true;
             preRaceCanvas.SetActive(false);
             StartCoroutine(StartCountdown());
+            countdownBeenRunned = true;
         }
     }
 

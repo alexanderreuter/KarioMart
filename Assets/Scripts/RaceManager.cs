@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,8 +5,8 @@ using UnityEngine.InputSystem;
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance;
-    public List<CheckPointManager> checkPointManagers = new List<CheckPointManager>();
     
+    public List<CheckpointManager> checkpointManagers = new List<CheckpointManager>();
     private bool isRaceStarting;
     private bool isRaceLive;
     private bool isRaceCompleted;
@@ -25,9 +24,9 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    public void RegisterCheckPointManager(CheckPointManager manager)
+    public void RegisterCheckPointManager(CheckpointManager manager)
     {
-        checkPointManagers.Add(manager);
+        checkpointManagers.Add(manager);
     }
     
     public bool IsRaceLive
@@ -46,11 +45,6 @@ public class RaceManager : MonoBehaviour
     {
         get { return isRaceCompleted; }
         set { isRaceCompleted = value; }
-    }
-    
-    public int NumberOfCheckpoints
-    {
-        get { return numberOfCheckpoints; }
     }
     
     void Start()

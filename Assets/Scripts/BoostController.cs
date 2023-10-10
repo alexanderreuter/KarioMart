@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoostController : MonoBehaviour
@@ -15,8 +13,7 @@ public class BoostController : MonoBehaviour
         // Set the trail renderer to not emit trail on default
         trailRenderer.emitting = false;
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
         if (carController.IsBoosting())
